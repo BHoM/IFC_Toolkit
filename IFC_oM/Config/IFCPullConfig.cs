@@ -21,14 +21,23 @@
  */
 
  using BH.oM.Adapter;
+using System.ComponentModel;
 
 namespace BH.oM.Adapters.IFC
 {
+    [Description("Configuration used for adapter interaction with the .ifc file on Pull action.")]
     public class IFCPullConfig : ActionConfig
     {
+        /***************************************************/
+        /****             Public Properties             ****/
+        /***************************************************/
 
+        [Description("Discipline used on pull action.")]
+        public Discipline Discipline { get; set; } = Discipline.Undefined;
+
+        [Description("If true, meshed surfaces of elements will be pulled and stored in IFCRepresentation fragment.")]
         public bool PullMeshes { get; set; } = false;
 
-        public Discipline Discipline { get; set; } = Discipline.Undefined;
+        /***************************************************/
     }
 }
