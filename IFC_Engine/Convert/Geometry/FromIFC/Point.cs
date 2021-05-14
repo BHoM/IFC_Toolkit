@@ -20,23 +20,20 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapters.IFC;
-using BH.oM.Base;
 using BH.oM.Geometry;
-using System.Collections.Generic;
-using System.Linq;
+using Xbim.Common.Geometry;
 
 namespace BH.Engine.Adapters.IFC
 {
-    public static partial class Query
+    public static partial class Convert
     {
         /***************************************************/
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static List<Mesh> IFCMeshes(this IBHoMObject bHoMObject)
+        public static Point PointFromIFC(this XbimPoint3D point)
         {
-            return (bHoMObject?.Fragments?.FirstOrDefault(x => x is IFCRepresentation) as IFCRepresentation)?.Meshes?.ToList();
+            return new Point { X = point.X, Y = point.Y, Z = point.Z };
         }
 
         /***************************************************/

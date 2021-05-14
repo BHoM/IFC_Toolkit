@@ -20,12 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xbim.Ifc2x3.Interfaces;
+using BH.oM.Adapters.IFC;
 
 namespace BH.Engine.Adapters.IFC
 {
@@ -35,21 +30,16 @@ namespace BH.Engine.Adapters.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static Type CorrespondentIFCType(this Type bHoMType)
+        public static IFCSettings DefaultIfNull(this IFCSettings settings)
         {
-            if (m_TypeMap.ContainsKey(bHoMType))
-                return m_TypeMap[bHoMType];
-            else
-                return null;
+            if (settings == null)
+            {
+                settings = new IFCSettings();
+                BH.Engine.Reflection.Compute.RecordNote("Settings have not been specified, default settings are used.");
+            }
+
+            return settings;
         }
-
-        /***************************************************/
-
-        private static Dictionary<Type, Type> m_TypeMap = new Dictionary<Type, Type>
-        {
-            { typeof(BH.oM.Physical.Elements.Floor), typeof(IIfcSlab) },
-            { typeof(BH.oM.Physical.Reinforcement.IReinforcingBar), typeof(IIfcReinforcingBar) }
-        };
 
         /***************************************************/
     }

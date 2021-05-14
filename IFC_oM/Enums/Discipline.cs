@@ -20,27 +20,29 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapters.IFC;
-using BH.oM.Base;
-using BH.oM.Geometry;
-using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
-namespace BH.Engine.Adapters.IFC
+namespace BH.oM.Adapters.IFC
 {
-    public static partial class Query
+    /***************************************************/
+
+    [Description("Enumerator allowing choosing to which discipline (and corresponding namespace) should IFC elements be converted on pull.")]
+    public enum Discipline
     {
-        /***************************************************/
-        /****              Public Methods               ****/
-        /***************************************************/
-
-        public static List<Mesh> IFCMeshes(this IBHoMObject bHoMObject)
-        {
-            return (bHoMObject?.Fragments?.FirstOrDefault(x => x is IFCRepresentation) as IFCRepresentation)?.Meshes?.ToList();
-        }
-
-        /***************************************************/
+        [Description("Default discipline to be used.")]
+        Undefined,
+        [Description("Elements to be converted to types from BH.oM.Environment. If no suitable conversion exists, default discipline to be used.")]
+        Environmental,
+        [Description("Elements to be converted to types from BH.oM.Structure. If no suitable conversion exists, default discipline to be used.")]
+        Structural,
+        [Description("Elements to be converted to types from BH.oM.Architecture. If no suitable conversion exists, default discipline to be used.")]
+        Architecture,
+        [Description("Elements to be converted to types from BH.oM.Physical. If no suitable conversion exists, default discipline to be used.")]
+        Physical,
+        [Description("Elements to be converted to types from BH.oM.Facade. If no suitable conversion exists, default discipline to be used.")]
+        Facade,
     }
-}
 
+    /***************************************************/
+}
 
