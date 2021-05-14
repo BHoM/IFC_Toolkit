@@ -35,7 +35,7 @@ namespace BH.Engine.Adapters.IFC
         /****              Public methods               ****/
         /***************************************************/
 
-        [Description("Gets the discipline to which a given BHoM type belongs. The result is based on the namespace in which the type is declared, e.g. BH.oM.Structure.Elements.Bar will return oM.Adapters.Revit.Enums.Discipline.Structural.")]
+        [Description("Gets the discipline to which a given BHoM type belongs. The result is based on the namespace in which the type is declared, e.g. BH.oM.Structure.Elements.Bar will return oM.Adapters.IFC.Discipline.Structural.")]
         [Input("type", "BHoM type to be queried.")]
         [Output("discipline")]
         public static Discipline Discipline(this Type type)
@@ -65,7 +65,7 @@ namespace BH.Engine.Adapters.IFC
 
         [Description("Gets discipline enforced by the Request. If the result is different than defaultDiscipline and neither of two is Undefined, null is returned (the result discipline is conflicting with defaultDiscipline).")]
         [Input("request", "BHoM Request to be queried.")]
-        [Input("defaultDiscipline", "Default discipline set in adapter's ActionConfig (RevitPullConfig).")]
+        [Input("defaultDiscipline", "Default discipline set in adapter's ActionConfig (IFCPullConfig).")]
         [Output("discipline")]
         public static Discipline? Discipline(this IRequest request, Discipline? defaultDiscipline)
         {
