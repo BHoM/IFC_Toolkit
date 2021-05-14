@@ -42,6 +42,7 @@ namespace BH.Adapter.IFC
 
         protected override IEnumerable<IBHoMObject> Read(IRequest request, ActionConfig actionConfig = null)
         {
+            // Get the toolkit-specific PullConfig
             IFCPullConfig config = actionConfig as IFCPullConfig;
             if (config == null)
             {
@@ -49,8 +50,10 @@ namespace BH.Adapter.IFC
                 BH.Engine.Reflection.Compute.RecordNote("Config has not been specified, default config is used.");
             }
 
+            // Get the settings
             IFCSettings settings = this.IFCSettings.DefaultIfNull();
 
+            // Get the discipline coming from the request/PullConfig
             Discipline? requestDiscipline = request.Discipline(config.Discipline);
             if (requestDiscipline == null)
             {
@@ -60,6 +63,7 @@ namespace BH.Adapter.IFC
 
             Discipline discipline = requestDiscipline.Value;
 
+            // If instructed to pull mesh representations, the below variables will be assigned
             List<XbimShapeInstance> shapeInstances = null;
             Xbim3DModelContext context = null;
 
@@ -79,6 +83,7 @@ namespace BH.Adapter.IFC
 
                 IEnumerable<IBHoMObject> converted = element.IFromIFC(discipline, settings);
 
+                // Pull mesh representations if requested in PullConfig
                 if (shapeInstances != null && context != null)
                 {
                     List<Mesh> meshes = shapeInstances.Where(x => x.IfcProductLabel == element.EntityLabel).SelectMany(x => x.Meshes(context)).ToList();
