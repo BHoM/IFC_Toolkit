@@ -33,10 +33,10 @@ namespace BH.oM.Adapters.IFC
         /***************************************************/
 
         [Description("Discipline used on pull action.")]
-        public Discipline Discipline { get; set; } = Discipline.Undefined;
+        public virtual Discipline Discipline { get; set; } = Discipline.Undefined;
 
         [Description("If true, meshed surfaces of elements will be pulled and stored in IFCRepresentation fragment.")]
-        public bool PullMeshes { get; set; } = false;
+        public virtual bool PullMeshes { get; set; } = false;
 
         /***************************************************/
     }
