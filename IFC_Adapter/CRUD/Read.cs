@@ -26,12 +26,8 @@ using BH.oM.Adapters.IFC;
 using BH.oM.Base;
 using BH.oM.Data.Requests;
 using BH.oM.Geometry;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Management.Automation;
 using Xbim.Common.Geometry;
 using Xbim.Ifc2x3.Interfaces;
 using Xbim.ModelGeometry.Scene;
@@ -44,7 +40,7 @@ namespace BH.Adapter.IFC
         /**** Public Methods                            ****/
         /***************************************************/
 
-        protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids, ActionConfig actionConfig = null)
+        protected override IEnumerable<IBHoMObject> Read(IRequest request, ActionConfig actionConfig = null)
         {
             IFCPullConfig config = actionConfig as IFCPullConfig;
             if (config == null)
@@ -53,27 +49,16 @@ namespace BH.Adapter.IFC
                 BH.Engine.Reflection.Compute.RecordNote("Config has not been specified, default config is used.");
             }
 
-            //TODO: make it defaultIfNull and add to each convert, see Revit_Toolkit
-            IFCSettings settings = this.IFCSettings;
-            if (settings == null)
+            IFCSettings settings = this.IFCSettings.DefaultIfNull();
+
+            Discipline? requestDiscipline = request.Discipline(config.Discipline);
+            if (requestDiscipline == null)
             {
-                settings = new IFCSettings();
-                BH.Engine.Reflection.Compute.RecordNote("Settings have not been specified, default settings are used.");
+                BH.Engine.Reflection.Compute.RecordError("Conflicting disciplines have been detected.");
+                return new List<IBHoMObject>();
             }
 
-            //TODO: this could be processed based on implemented converts, similar to Revit_Toolkit?
-            Type correspondentType = type.CorrespondentIFCType();
-            if (correspondentType == null)
-            {
-                BH.Engine.Reflection.Compute.RecordError("Given BHoM type is not supported.");
-                return null;
-            }
-
-            if (ids != null && ids.Count != 0)
-            {
-                BH.Engine.Reflection.Compute.RecordError("Ids in FilterRequest are not supported.");
-                return null;
-            }
+            Discipline discipline = requestDiscipline.Value;
 
             List<XbimShapeInstance> shapeInstances = null;
             Xbim3DModelContext context = null;
@@ -86,13 +71,13 @@ namespace BH.Adapter.IFC
             }
 
             List<IBHoMObject> result = new List<IBHoMObject>();
-            foreach (var item in m_LoadedModel.Instances.Where(x => correspondentType.IsAssignableFrom(x.GetType()))) 
+            foreach (var entity in m_LoadedModel.IIFCEntities(request))  
             {
-                IIfcElement element = item as IIfcElement;
+                IIfcElement element = entity as IIfcElement;
                 if (element == null)
                     continue;
 
-                IEnumerable<IBHoMObject> converted = element.IFromIFC(settings);
+                IEnumerable<IBHoMObject> converted = element.IFromIFC(discipline, settings);
 
                 if (shapeInstances != null && context != null)
                 {

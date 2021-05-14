@@ -48,7 +48,7 @@ namespace BH.Adapter.IFC
                 return new List<object>();
             }
 
-            return Read(request as dynamic, actionConfig);
+            return Read(request, actionConfig);
         }
 
         /***************************************************/

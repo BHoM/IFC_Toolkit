@@ -19,28 +19,58 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
-using BH.oM.Adapters.IFC;
-using BH.oM.Base;
-using BH.oM.Geometry;
+ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Xbim.Ifc2x3.Interfaces;
 
 namespace BH.Engine.Adapters.IFC
 {
     public static partial class Query
     {
         /***************************************************/
-        /****              Public Methods               ****/
+        /****              Public methods               ****/
         /***************************************************/
 
-        public static List<Mesh> IFCMeshes(this IBHoMObject bHoMObject)
+        public static IEnumerable<Type> CorrespondentIFCTypes(this Type bHoMType)
         {
-            return (bHoMObject?.Fragments?.FirstOrDefault(x => x is IFCRepresentation) as IFCRepresentation)?.Meshes?.ToList();
+            if (m_IFCTypes.ContainsKey(bHoMType))
+                return m_IFCTypes[bHoMType];
+
+            HashSet<Type> iFCTypes = new HashSet<Type>();
+            BindingFlags bindingBHoM = BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static;
+            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
+            {
+                if (t.IsInterface || !t.IsAbstract || t.Name != "Convert")
+                    continue;
+
+                MethodInfo[] typeMethods = t.GetMethods(bindingBHoM);
+                Type ienumType = typeof(IEnumerable<>).MakeGenericType(bHoMType);
+                foreach (MethodInfo mi in typeMethods.Where(x => x.Name.EndsWith("FromIFC")))
+                {
+                    if (bHoMType.IsAssignableFrom(mi.ReturnType) || ienumType.IsAssignableFrom(mi.ReturnType))
+                    {
+                        Type parameterType = mi.GetParameters().First().ParameterType;
+                        if (parameterType != typeof(IIfcObject) && typeof(IIfcObject).IsAssignableFrom(parameterType))
+                            iFCTypes.Add(parameterType);
+                    }
+                }
+            }
+
+            m_IFCTypes.Add(bHoMType, iFCTypes);
+            return iFCTypes;
         }
+
+
+        /***************************************************/
+        /****              Private Fields               ****/
+        /***************************************************/
+
+        private static Dictionary<Type, HashSet<Type>> m_IFCTypes = new Dictionary<Type, HashSet<Type>>();
 
         /***************************************************/
     }
 }
-
 

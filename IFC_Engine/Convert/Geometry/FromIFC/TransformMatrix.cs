@@ -20,23 +20,40 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapters.IFC;
-using BH.oM.Base;
 using BH.oM.Geometry;
-using System.Collections.Generic;
-using System.Linq;
+using Xbim.Common.Geometry;
 
 namespace BH.Engine.Adapters.IFC
 {
-    public static partial class Query
+    public static partial class Convert
     {
         /***************************************************/
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static List<Mesh> IFCMeshes(this IBHoMObject bHoMObject)
+        public static TransformMatrix TransformMatrixFromIFC(this XbimMatrix3D matrix)
         {
-            return (bHoMObject?.Fragments?.FirstOrDefault(x => x is IFCRepresentation) as IFCRepresentation)?.Meshes?.ToList();
+            double[] dbls = matrix.ToDoubleArray();
+            TransformMatrix result = new TransformMatrix();
+
+            result.Matrix[0, 0] = dbls[0];
+            result.Matrix[1, 0] = dbls[1];
+            result.Matrix[2, 0] = dbls[2];
+            result.Matrix[3, 0] = dbls[3];
+            result.Matrix[0, 1] = dbls[4];
+            result.Matrix[1, 1] = dbls[5];
+            result.Matrix[2, 1] = dbls[6];
+            result.Matrix[3, 1] = dbls[7];
+            result.Matrix[0, 2] = dbls[8];
+            result.Matrix[1, 2] = dbls[9];
+            result.Matrix[2, 2] = dbls[10];
+            result.Matrix[3, 2] = dbls[11];
+            result.Matrix[0, 3] = dbls[12];
+            result.Matrix[1, 3] = dbls[13];
+            result.Matrix[2, 3] = dbls[14];
+            result.Matrix[3, 3] = dbls[15];
+
+            return result;
         }
 
         /***************************************************/

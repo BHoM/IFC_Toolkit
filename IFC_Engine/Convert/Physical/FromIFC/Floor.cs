@@ -22,21 +22,22 @@
 
 using BH.oM.Adapters.IFC;
 using BH.oM.Base;
-using BH.oM.Geometry;
+using BH.oM.Physical.Elements;
 using System.Collections.Generic;
-using System.Linq;
+using Xbim.Ifc2x3.Interfaces;
 
 namespace BH.Engine.Adapters.IFC
 {
-    public static partial class Query
+    public static partial class Convert
     {
         /***************************************************/
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static List<Mesh> IFCMeshes(this IBHoMObject bHoMObject)
+        public static Floor FloorFromIFC(this IIfcSlab element, IFCSettings settings)
         {
-            return (bHoMObject?.Fragments?.FirstOrDefault(x => x is IFCRepresentation) as IFCRepresentation)?.Meshes?.ToList();
+            //TODO: refine this!
+            return new Floor();
         }
 
         /***************************************************/
