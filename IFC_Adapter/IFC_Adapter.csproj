@@ -231,6 +231,19 @@
   <PropertyGroup>
     <PostBuildEvent>
 		xcopy "$(TargetDir)$(TargetFileName)"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Microsoft.Extensions.Logging.Abstractions.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Microsoft.Extensions.Logging.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Microsoft.Extensions.Options.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.Common.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.Geometry.Engine.Interop.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.Geometry.Engine32.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.Geometry.Engine64.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.Ifc.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.Ifc2x3.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.Ifc4.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.IO.MemoryModel.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.ModelGeometry.Scene.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
+		xcopy "$(TargetDir)Xbim.Tessellator.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
 	</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Xbim.Geometry.Engine.Interop.5.1.403\build\net472\Xbim.Geometry.Engine.Interop.targets" Condition="Exists('..\packages\Xbim.Geometry.Engine.Interop.5.1.403\build\net472\Xbim.Geometry.Engine.Interop.targets')" />
