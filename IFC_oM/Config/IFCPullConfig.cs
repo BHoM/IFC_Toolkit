@@ -26,7 +26,7 @@ namespace BH.oM.Adapters.IFC
 {
     public class IFCPullConfig : ActionConfig
     {
-        //TODO: change it to PullGeometryConfig!
+
         public bool PullMeshes { get; set; } = false;
 
         public Discipline Discipline { get; set; } = Discipline.Undefined;

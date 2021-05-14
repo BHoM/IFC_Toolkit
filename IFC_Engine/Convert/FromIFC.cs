@@ -22,14 +22,7 @@
 
 using BH.oM.Adapters.IFC;
 using BH.oM.Base;
-using BH.oM.Geometry;
-using BH.oM.Physical.Elements;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xbim.Common.Geometry;
 using Xbim.Ifc2x3.Interfaces;
 
 namespace BH.Engine.Adapters.IFC
