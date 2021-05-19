@@ -26,7 +26,7 @@ using BH.oM.Physical.Reinforcement;
 using System.Collections.Generic;
 using Xbim.Ifc2x3.Interfaces;
 
-namespace BH.Engine.Adapters.IFC
+namespace BH.Adapter.IFC
 {
     public static partial class Convert
     {
