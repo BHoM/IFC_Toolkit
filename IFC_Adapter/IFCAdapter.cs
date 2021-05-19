@@ -28,6 +28,7 @@ using Xbim.Ifc;
 
 namespace BH.Adapter.IFC
 {
+    [Description("Adapter allowing to interact with the locally saved IFC files.")]
     public partial class IFCAdapter : BHoMAdapter, IDisposable
     {
         /***************************************************/
