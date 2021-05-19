@@ -36,6 +36,9 @@ namespace BH.Adapter.IFC
 
         public static IEnumerable<Type> CorrespondentIFCTypes(this Type bHoMType)
         {
+            if (bHoMType == null)
+                return new List<Type>();
+
             if (m_IFCTypes.ContainsKey(bHoMType))
                 return m_IFCTypes[bHoMType];
 

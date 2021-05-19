@@ -39,6 +39,18 @@ namespace BH.Adapter.IFC
 
         public static List<Mesh> Meshes(this XbimShapeInstance instance, Xbim3DModelContext context)
         {
+            if (instance == null)
+            {
+                BH.Engine.Reflection.Compute.RecordError("The meshes could not be extracted because the IFC element is null.");
+                return null;
+            }
+
+            if (context == null)
+            {
+                BH.Engine.Reflection.Compute.RecordError("The meshes could not be extracted because the 3D model context is null.");
+                return null;
+            }
+
             List<Mesh> result;
 
             //Instance's geometry
@@ -63,6 +75,12 @@ namespace BH.Adapter.IFC
 
         public static List<Mesh> Meshes(this XbimShapeTriangulation shape)
         {
+            if (shape == null)
+            {
+                BH.Engine.Reflection.Compute.RecordError("The meshes could not be extracted because the shape triangulation model is null.");
+                return null;
+            }
+
             List<Mesh> result = new List<Mesh>();
             List<Point> allVertices = shape.Vertices.Select(x => x.PointFromIFC()).ToList();
 
