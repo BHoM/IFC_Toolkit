@@ -232,9 +232,9 @@
     <Compile Include="Methods\Convert\Physical\FromIFC\Floor.cs" />
     <Compile Include="Methods\Convert\Physical\FromIFC\ReinforcingBar.cs" />
     <Compile Include="CRUD\Read.cs" />
-    <Compile Include="IFCAdapter.cs" />
-    <Compile Include="Methods\Query\CorrespondentIFCTypes.cs" />
-    <Compile Include="Methods\Query\IFCEntities.cs" />
+    <Compile Include="IfcAdapter.cs" />
+    <Compile Include="Methods\Query\CorrespondentIfcTypes.cs" />
+    <Compile Include="Methods\Query\IfcEntities.cs" />
     <Compile Include="Methods\Query\Meshes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

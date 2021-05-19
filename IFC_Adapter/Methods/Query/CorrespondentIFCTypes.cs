@@ -34,7 +34,7 @@ namespace BH.Adapter.IFC
         /****              Public methods               ****/
         /***************************************************/
 
-        public static IEnumerable<Type> CorrespondentIFCTypes(this Type bHoMType)
+        public static IEnumerable<Type> CorrespondentIfcTypes(this Type bHoMType)
         {
             if (bHoMType == null)
                 return new List<Type>();
@@ -51,7 +51,7 @@ namespace BH.Adapter.IFC
 
                 MethodInfo[] typeMethods = t.GetMethods(bindingBHoM);
                 Type ienumType = typeof(IEnumerable<>).MakeGenericType(bHoMType);
-                foreach (MethodInfo mi in typeMethods.Where(x => x.Name.EndsWith("FromIFC")))
+                foreach (MethodInfo mi in typeMethods.Where(x => x.Name.EndsWith("FromIfc")))
                 {
                     if (bHoMType.IsAssignableFrom(mi.ReturnType) || ienumType.IsAssignableFrom(mi.ReturnType))
                     {

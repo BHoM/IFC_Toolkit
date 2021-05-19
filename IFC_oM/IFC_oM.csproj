@@ -60,11 +60,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\IFCPullConfig.cs" />
+    <Compile Include="Config\IfcPullConfig.cs" />
     <Compile Include="Enums\Discipline.cs" />
-    <Compile Include="Misc\IFCRepresentation.cs" />
+    <Compile Include="Misc\IfcRepresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\IFCSettings.cs" />
+    <Compile Include="Settings\IfcSettings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

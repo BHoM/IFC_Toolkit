@@ -31,7 +31,7 @@ namespace BH.Adapter.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static Point PointFromIFC(this XbimPoint3D point)
+        public static Point PointFromIfc(this XbimPoint3D point)
         {
             return new Point { X = point.X, Y = point.Y, Z = point.Z };
         }

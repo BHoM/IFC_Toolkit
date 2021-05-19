@@ -34,7 +34,7 @@ using Xbim.ModelGeometry.Scene;
 
 namespace BH.Adapter.IFC
 {
-    public partial class IFCAdapter : BHoMAdapter
+    public partial class IfcAdapter : BHoMAdapter
     {
         /***************************************************/
         /**** Public Methods                            ****/
@@ -49,15 +49,15 @@ namespace BH.Adapter.IFC
             }
 
             // Get the toolkit-specific PullConfig
-            IFCPullConfig config = actionConfig as IFCPullConfig;
+            IfcPullConfig config = actionConfig as IfcPullConfig;
             if (config == null)
             {
-                config = new IFCPullConfig();
+                config = new IfcPullConfig();
                 BH.Engine.Reflection.Compute.RecordNote("Config has not been specified, default config is used.");
             }
 
             // Get the settings
-            IFCSettings settings = this.IFCSettings.DefaultIfNull();
+            IfcSettings settings = this.IFCSettings.DefaultIfNull();
 
             // Get the discipline coming from the request/PullConfig
             Discipline? requestDiscipline = request.Discipline(config.Discipline);
@@ -81,7 +81,7 @@ namespace BH.Adapter.IFC
             }
 
             List<IBHoMObject> result = new List<IBHoMObject>();
-            foreach (var entity in m_LoadedModel.IIFCEntities(request))  
+            foreach (var entity in m_LoadedModel.IIfcEntities(request))  
             {
                 IIfcElement element = entity as IIfcElement;
                 if (element == null)
@@ -93,7 +93,7 @@ namespace BH.Adapter.IFC
                 if (shapeInstances != null && context != null)
                 {
                     List<Mesh> meshes = shapeInstances.Where(x => x.IfcProductLabel == element.EntityLabel).SelectMany(x => x.Meshes(context)).ToList();
-                    IFCRepresentation representation = new IFCRepresentation(meshes);
+                    IfcRepresentation representation = new IfcRepresentation(meshes);
 
                     foreach (IBHoMObject obj in converted)
                     {

@@ -30,7 +30,7 @@ using System.Linq;
 namespace BH.oM.Adapters.IFC
 {
     [Description("Representation of an object extracted from an .ifc file.")]
-    public class IFCRepresentation : IFragment, IImmutable
+    public class IfcRepresentation : IFragment, IImmutable
     {
         /***************************************************/
         /****             Public Properties             ****/
@@ -44,7 +44,7 @@ namespace BH.oM.Adapters.IFC
         /****            Public Constructors            ****/
         /***************************************************/
 
-        public IFCRepresentation(IEnumerable<Mesh> meshes)
+        public IfcRepresentation(IEnumerable<Mesh> meshes)
         {
             Meshes = meshes == null ? null : new ReadOnlyCollection<Mesh>(meshes.ToList());
         }

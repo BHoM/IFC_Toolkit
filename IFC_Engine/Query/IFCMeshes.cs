@@ -34,9 +34,9 @@ namespace BH.Engine.Adapters.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static List<Mesh> IFCMeshes(this IBHoMObject bHoMObject)
+        public static List<Mesh> IfcMeshes(this IBHoMObject bHoMObject)
         {
-            return (bHoMObject?.Fragments?.FirstOrDefault(x => x is IFCRepresentation) as IFCRepresentation)?.Meshes?.ToList();
+            return (bHoMObject?.Fragments?.FirstOrDefault(x => x is IfcRepresentation) as IfcRepresentation)?.Meshes?.ToList();
         }
 
         /***************************************************/

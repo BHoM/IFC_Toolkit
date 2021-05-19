@@ -36,9 +36,9 @@ namespace BH.Adapter.IFC
         /****             Interface Methods             ****/
         /***************************************************/
 
-        public static List<IPersistEntity> IIFCEntities(this Xbim.Ifc.IfcStore model, IRequest request)
+        public static List<IPersistEntity> IIfcEntities(this Xbim.Ifc.IfcStore model, IRequest request)
         {
-            return IFCEntities(model, request as dynamic);
+            return IfcEntities(model, request as dynamic);
         }
 
 
@@ -46,7 +46,7 @@ namespace BH.Adapter.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static List<IPersistEntity> IFCEntities(this Xbim.Ifc.IfcStore model, FilterRequest request)
+        public static List<IPersistEntity> IfcEntities(this Xbim.Ifc.IfcStore model, FilterRequest request)
         {
             if (model == null || request?.Type == null)
                 return null;
@@ -63,7 +63,7 @@ namespace BH.Adapter.IFC
                 return null;
             }
 
-            IEnumerable<Type> correspondentTypes = request.Type.CorrespondentIFCTypes();
+            IEnumerable<Type> correspondentTypes = request.Type.CorrespondentIfcTypes();
 
             return model.Instances.Where(x => correspondentTypes.Any(y => y.IsAssignableFrom(x.GetType()))).ToList();
         }
@@ -73,7 +73,7 @@ namespace BH.Adapter.IFC
         /****             Fallback Methods              ****/
         /***************************************************/
 
-        public static List<IPersistEntity> IFCEntities(this Xbim.Ifc.IfcStore model, IRequest request)
+        public static List<IPersistEntity> IfcEntities(this Xbim.Ifc.IfcStore model, IRequest request)
         {
             BH.Engine.Reflection.Compute.RecordError($"Request of type {request.GetType()} is not supported.");
             return null;

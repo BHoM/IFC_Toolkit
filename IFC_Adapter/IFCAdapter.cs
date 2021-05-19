@@ -29,25 +29,25 @@ using Xbim.Ifc;
 namespace BH.Adapter.IFC
 {
     [Description("Adapter allowing to interact with the locally saved IFC files.")]
-    public partial class IFCAdapter : BHoMAdapter, IDisposable
+    public partial class IfcAdapter : BHoMAdapter, IDisposable
     {
         /***************************************************/
         /**** Public properties                         ****/
         /***************************************************/
 
         [Description("Settings of the IFC adapter.")]
-        public IFCSettings IFCSettings { get; set; } = null;
+        public IfcSettings IFCSettings { get; set; } = null;
 
 
         /***************************************************/
         /**** Constructors                              ****/
         /***************************************************/
 
-        [Description("Initialises the IFC_Adapter with a target location.")]
+        [Description("Initialises the IFC Adapter with a target location.")]
         [Input("targetLocation", "Path to the IFC file to be interacted with, including file extension.")]
         [Input("settings", "Settings of the IFC adapter.")]
         [Input("active", "If true, the adapter consumes the file at target location and prepares for interacting with it.")]
-        public IFCAdapter(string targetLocation, IFCSettings settings = null, bool active = false)
+        public IfcAdapter(string targetLocation, IfcSettings settings = null, bool active = false)
         {
             if (active)
             {

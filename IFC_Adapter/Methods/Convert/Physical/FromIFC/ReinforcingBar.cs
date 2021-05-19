@@ -35,7 +35,7 @@ namespace BH.Adapter.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static PrimaryReinforcingBar ReinforcingBarFromIFC(this IIfcReinforcingBar element, IFCSettings settings)
+        public static PrimaryReinforcingBar ReinforcingBarFromIfc(this IIfcReinforcingBar element, IfcSettings settings)
         {
             if (element == null)
             {
