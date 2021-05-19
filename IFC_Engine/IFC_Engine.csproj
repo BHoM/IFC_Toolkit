@@ -201,6 +201,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Create\IfcPullConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\DefaultIfNull.cs" />
     <Compile Include="Query\Discipline.cs" />
@@ -208,7 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Compute\" />
-    <Folder Include="Create\" />
     <Folder Include="Modify\" />
   </ItemGroup>
   <ItemGroup>
