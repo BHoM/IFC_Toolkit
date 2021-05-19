@@ -31,7 +31,7 @@ namespace BH.Adapter.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static TransformMatrix TransformMatrixFromIFC(this XbimMatrix3D matrix)
+        public static TransformMatrix TransformMatrixFromIfc(this XbimMatrix3D matrix)
         {
             double[] dbls = matrix.ToDoubleArray();
             TransformMatrix result = new TransformMatrix();

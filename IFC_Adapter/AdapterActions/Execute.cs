@@ -27,7 +27,7 @@ using System.Collections.Generic;
 
 namespace BH.Adapter.IFC
 {
-    public partial class IFCAdapter
+    public partial class IfcAdapter
     {
         /***************************************************/
         /**** Methods                                  *****/

@@ -25,7 +25,7 @@ using System.ComponentModel;
 namespace BH.oM.Adapters.IFC
 {
     [Description("Settings of the IFC adapter.")]
-    public class IFCSettings
+    public class IfcSettings
     {
         /***************************************************/
         /****             Public Properties             ****/

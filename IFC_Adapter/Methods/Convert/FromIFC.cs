@@ -33,7 +33,7 @@ namespace BH.Adapter.IFC
         /****             Interface Methods             ****/
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> IFromIFC(this IIfcElement element, Discipline discipline, IFCSettings settings = null)
+        public static IEnumerable<IBHoMObject> IFromIFC(this IIfcElement element, Discipline discipline, IfcSettings settings = null)
         {
             IEnumerable<IBHoMObject> result = FromIFC(element as dynamic, discipline, settings);
             if (result == null)
@@ -47,23 +47,23 @@ namespace BH.Adapter.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcSlab element, Discipline discipline, IFCSettings settings)
+        public static IEnumerable<IBHoMObject> FromIFC(this IIfcSlab element, Discipline discipline, IfcSettings settings)
         {
             switch (discipline)
             {
                 default:
-                    return new List<IBHoMObject> { element.FloorFromIFC(settings) };
+                    return new List<IBHoMObject> { element.FloorFromIfc(settings) };
             }
         }
 
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcReinforcingBar element, Discipline discipline, IFCSettings settings)
+        public static IEnumerable<IBHoMObject> FromIFC(this IIfcReinforcingBar element, Discipline discipline, IfcSettings settings)
         {
             switch (discipline)
             {
                 default:
-                    return new List<IBHoMObject> { element.ReinforcingBarFromIFC(settings) };
+                    return new List<IBHoMObject> { element.ReinforcingBarFromIfc(settings) };
             }
         }
 

@@ -26,7 +26,7 @@ using System.ComponentModel;
 namespace BH.oM.Adapters.IFC
 {
     [Description("Configuration used for adapter interaction with the .ifc file on Pull action.")]
-    public class IFCPullConfig : ActionConfig
+    public class IfcPullConfig : ActionConfig
     {
         /***************************************************/
         /****             Public Properties             ****/

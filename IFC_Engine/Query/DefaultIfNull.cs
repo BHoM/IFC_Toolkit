@@ -30,11 +30,11 @@ namespace BH.Engine.Adapters.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static IFCSettings DefaultIfNull(this IFCSettings settings)
+        public static IfcSettings DefaultIfNull(this IfcSettings settings)
         {
             if (settings == null)
             {
-                settings = new IFCSettings();
+                settings = new IfcSettings();
                 BH.Engine.Reflection.Compute.RecordNote("Settings have not been specified, default settings are used.");
             }
 

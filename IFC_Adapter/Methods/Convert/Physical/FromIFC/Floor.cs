@@ -35,7 +35,7 @@ namespace BH.Adapter.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static Floor FloorFromIFC(this IIfcSlab element, IFCSettings settings)
+        public static Floor FloorFromIfc(this IIfcSlab element, IfcSettings settings)
         {
             if (element == null)
             {

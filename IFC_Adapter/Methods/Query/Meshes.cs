@@ -67,7 +67,7 @@ namespace BH.Adapter.IFC
                 }
             }
 
-            TransformMatrix transform = instance.Transformation.TransformMatrixFromIFC();
+            TransformMatrix transform = instance.Transformation.TransformMatrixFromIfc();
             return result.Select(x => x.Transform(transform)).ToList();
         }
 
@@ -82,7 +82,7 @@ namespace BH.Adapter.IFC
             }
 
             List<Mesh> result = new List<Mesh>();
-            List<Point> allVertices = shape.Vertices.Select(x => x.PointFromIFC()).ToList();
+            List<Point> allVertices = shape.Vertices.Select(x => x.PointFromIfc()).ToList();
 
             foreach (XbimFaceTriangulation subMesh in shape.Faces)
             {
