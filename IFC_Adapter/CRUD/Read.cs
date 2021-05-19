@@ -83,7 +83,7 @@ namespace BH.Adapter.IFC
             List<IBHoMObject> result = new List<IBHoMObject>();
             foreach (var entity in m_LoadedModel.IIfcEntities(request))  
             {
-                IIfcElement element = entity as IIfcElement;
+                IIfcProduct element = entity as IIfcProduct;
                 if (element == null)
                     continue;
 
