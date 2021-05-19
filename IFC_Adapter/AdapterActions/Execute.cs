@@ -34,7 +34,7 @@ namespace BH.Adapter.IFC
         /***************************************************/
 
         [MultiOutput(0, "success", "List of booleans indicating whether the command succeeded for the individual items.")]
-        [MultiOutput(1, "GlobalSuccess", "Bool indicating whether the command succeded for all the provided inputs.")]
+        [MultiOutput(1, "globalSuccess", "Bool indicating whether the command succeded for all the provided inputs.")]
         public override oM.Reflection.Output<List<object>, bool> Execute(IExecuteCommand command, ActionConfig actionConfig = null)
         {
             BH.Engine.Reflection.Compute.RecordError("Execute action is not implemented in the IFC_Toolkit");
