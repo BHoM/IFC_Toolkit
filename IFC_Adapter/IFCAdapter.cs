@@ -20,41 +20,32 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter;
-using BH.Engine.Reflection;
 using BH.oM.Adapters.IFC;
-using BH.oM.Base;
-using BH.oM.Data.Requests;
 using BH.oM.Reflection.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using Xbim.Ifc;
 
 namespace BH.Adapter.IFC
 {
     public partial class IFCAdapter : BHoMAdapter, IDisposable
     {
+        /***************************************************/
+        /**** Public properties                         ****/
+        /***************************************************/
+
+        [Description("Settings of the IFC adapter.")]
         public IFCSettings IFCSettings { get; set; } = null;
+
 
         /***************************************************/
         /**** Constructors                              ****/
         /***************************************************/
 
-        [Description("Initialises the File_Adapter without a target location. Allows to target multiple files. Target file locations will have to be specified in the Adapter Action.")]
-        public IFCAdapter()
-        {
-            // By default, if they exist already, the files to be created are wiped out and then re-created.
-            this.m_AdapterSettings.DefaultPushType = oM.Adapter.PushType.UpdateOrCreateOnly;
-        }
-
-        //[Description("Initialises the File_Adapter with a target location.")]
-        //[Input("defaultFilepath", "Default filePath, including file extension. " +
-        //    "\nWhen Pushing, this is used for pushing objects that are not BHoM `File` or `Directory`." +
-        //    "\nWhen Pulling, if no request is specified, a FileContentRequest is automatically generated with this location." +
-        //    "\nBy default this is `C:\\temp\\Filing_Adapter-objects.json`.")]
+        [Description("Initialises the IFC_Adapter with a target location.")]
+        [Input("targetLocation", "Path to the IFC file to be interacted with, including file extension.")]
+        [Input("settings", "Settings of the IFC adapter.")]
+        [Input("active", "If true, the adapter consumes the file at target location and prepares for interacting with it.")]
         public IFCAdapter(string targetLocation, IFCSettings settings = null, bool active = false)
         {
             if (active)
@@ -74,8 +65,7 @@ namespace BH.Adapter.IFC
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
-
-        // Initialisation method for when the File Adapter is instantiated with a location.
+        
         private bool Init(string location)
         {
             if (string.IsNullOrWhiteSpace(location))
@@ -106,8 +96,11 @@ namespace BH.Adapter.IFC
             return true;
         }
 
+
         /***************************************************/
-        
+        /**** IDisposable implementation                ****/
+        /***************************************************/
+
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
