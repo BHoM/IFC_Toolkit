@@ -23,7 +23,9 @@
 using BH.oM.Adapters.IFC;
 using BH.oM.Base;
 using BH.oM.Geometry;
+using BH.oM.Reflection.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BH.Engine.Adapters.IFC
@@ -34,6 +36,9 @@ namespace BH.Engine.Adapters.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
+        [Description("Extracts the IFC meshes stored in Meshes property of IfcRepresentation fragment attached to the input BHoM object.")]
+        [Input("bHoMObject", "BHoM object to extract the IFC mesh representations from.")]
+        [Output("meshes", "IFC mesh representations extracted from the input BHoM object.")]
         public static List<Mesh> IfcMeshes(this IBHoMObject bHoMObject)
         {
             return (bHoMObject?.Fragments?.FirstOrDefault(x => x is IfcRepresentation) as IfcRepresentation)?.Meshes?.ToList();

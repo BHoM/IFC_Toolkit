@@ -21,6 +21,8 @@
  */
 
 using BH.oM.Adapters.IFC;
+using BH.oM.Reflection.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.IFC
 {
@@ -30,6 +32,9 @@ namespace BH.Engine.Adapters.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
+        [Description("Returns either the input settings if they are not null, or the default settings.")]
+        [Input("settings", "Input settings to be replaced with defaults in case they are null.")]
+        [Output("settings", "Input settings replaced with defaults in case they were null.")]
         public static IfcSettings DefaultIfNull(this IfcSettings settings)
         {
             if (settings == null)
