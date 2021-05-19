@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapters.IFC;
 using BH.oM.Adapters.IFC;
 using BH.oM.Base;
 using BH.oM.Physical.Reinforcement;
@@ -36,6 +37,14 @@ namespace BH.Adapter.IFC
 
         public static PrimaryReinforcingBar ReinforcingBarFromIFC(this IIfcReinforcingBar element, IFCSettings settings)
         {
+            if (element == null)
+            {
+                BH.Engine.Reflection.Compute.RecordError("The IFC element could not be converted because it was null.");
+                return null;
+            }
+
+            settings = settings.DefaultIfNull();
+
             //TODO: refine this!
             return new PrimaryReinforcingBar();
         }
