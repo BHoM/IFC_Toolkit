@@ -42,6 +42,12 @@ namespace BH.Adapter.IFC
 
         protected override IEnumerable<IBHoMObject> Read(IRequest request, ActionConfig actionConfig = null)
         {
+            if (request == null)
+            {
+                BH.Engine.Reflection.Compute.RecordError("The request is null, pull failed.");
+                return new List<IBHoMObject>();
+            }
+
             // Get the toolkit-specific PullConfig
             IFCPullConfig config = actionConfig as IFCPullConfig;
             if (config == null)
