@@ -69,15 +69,18 @@ namespace BH.Adapter.IFC
 
             Discipline discipline = requestDiscipline.Value;
 
-            // If instructed to pull mesh representations, the below variables will be assigned
+            // If instructed to pull mesh representations, the below variable will be assigned
             List<XbimShapeInstance> shapeInstances = null;
-            Xbim3DModelContext context = null;
 
             if (config.PullMeshes)
             {
-                context = new Xbim3DModelContext(m_LoadedModel);
-                context.CreateContext();
-                shapeInstances = context.ShapeInstances().ToList();
+                if (m_3DContext == null)
+                {
+                    m_3DContext = new Xbim3DModelContext(m_LoadedModel);
+                    m_3DContext.CreateContext();
+                }
+
+                shapeInstances = m_3DContext.ShapeInstances().ToList();
             }
 
             List<IBHoMObject> result = new List<IBHoMObject>();
@@ -90,9 +93,9 @@ namespace BH.Adapter.IFC
                 IEnumerable<IBHoMObject> converted = element.IFromIfc(discipline, settings);
 
                 // Pull mesh representations if requested in PullConfig
-                if (shapeInstances != null && context != null)
+                if (shapeInstances != null)
                 {
-                    List<Mesh> meshes = shapeInstances.Where(x => x.IfcProductLabel == element.EntityLabel).SelectMany(x => x.Meshes(context)).ToList();
+                    List<Mesh> meshes = shapeInstances.Where(x => x.IfcProductLabel == element.EntityLabel).SelectMany(x => x.Meshes(m_3DContext)).ToList();
                     IfcRepresentation representation = new IfcRepresentation(meshes);
 
                     foreach (IBHoMObject obj in converted)

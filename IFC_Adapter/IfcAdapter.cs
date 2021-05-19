@@ -25,6 +25,7 @@ using BH.oM.Reflection.Attributes;
 using System;
 using System.ComponentModel;
 using Xbim.Ifc;
+using Xbim.ModelGeometry.Scene;
 
 namespace BH.Adapter.IFC
 {
@@ -62,11 +63,13 @@ namespace BH.Adapter.IFC
 
         private IfcStore m_LoadedModel;
 
+        private Xbim3DModelContext m_3DContext;
+
 
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
-        
+
         private bool Init(string location)
         {
             if (string.IsNullOrWhiteSpace(location))
