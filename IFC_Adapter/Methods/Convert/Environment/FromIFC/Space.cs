@@ -20,8 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapters.IFC;
 using BH.oM.Adapters.IFC;
 using BH.oM.Base;
+using BH.oM.Environment.Elements;
 using System.Collections.Generic;
 using Xbim.Ifc2x3.Interfaces;
 
@@ -30,55 +32,21 @@ namespace BH.Adapter.IFC
     public static partial class Convert
     {
         /***************************************************/
-        /****             Interface Methods             ****/
-        /***************************************************/
-
-        public static IEnumerable<IBHoMObject> IFromIFC(this IIfcProduct element, Discipline discipline, IfcSettings settings = null)
-        {
-            IEnumerable<IBHoMObject> result = FromIFC(element as dynamic, discipline, settings);
-            if (result == null)
-            {
-                BH.Engine.Reflection.Compute.RecordError($"IFC element conversion to BHoM failed for discipline {discipline}. A CustomObject is returned instead.");
-                return new List<IBHoMObject> { new CustomObject { Name = element.Name } };
-            }
-
-            return result;
-        }
-
-
-        /***************************************************/
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcSlab element, Discipline discipline, IfcSettings settings)
+        public static Space SpaceFromIfc(this IIfcSpace element, IfcSettings settings)
         {
-            switch (discipline)
+            if (element == null)
             {
-                default:
-                    return new List<IBHoMObject> { element.FloorFromIfc(settings) };
+                BH.Engine.Reflection.Compute.RecordError("The IFC element could not be converted because it was null.");
+                return null;
             }
-        }
 
-        /***************************************************/
+            settings = settings.DefaultIfNull();
 
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcReinforcingBar element, Discipline discipline, IfcSettings settings)
-        {
-            switch (discipline)
-            {
-                default:
-                    return new List<IBHoMObject> { element.ReinforcingBarFromIfc(settings) };
-            }
-        }
-
-        /***************************************************/
-
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcSpace element, Discipline discipline, IfcSettings settings)
-        {
-            switch (discipline)
-            {
-                default:
-                    return new List<IBHoMObject> { element.SpaceFromIfc(settings) };
-            }
+            //TODO: refine this!
+            return new Space { Name = element.Name };
         }
 
         /***************************************************/
