@@ -87,7 +87,7 @@ namespace BH.Adapter.IFC
                 if (element == null)
                     continue;
 
-                IEnumerable<IBHoMObject> converted = element.IFromIFC(discipline, settings);
+                IEnumerable<IBHoMObject> converted = element.IFromIfc(discipline, settings);
 
                 // Pull mesh representations if requested in PullConfig
                 if (shapeInstances != null && context != null)

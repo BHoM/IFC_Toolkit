@@ -33,9 +33,9 @@ namespace BH.Adapter.IFC
         /****             Interface Methods             ****/
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> IFromIFC(this IIfcProduct element, Discipline discipline, IfcSettings settings = null)
+        public static IEnumerable<IBHoMObject> IFromIfc(this IIfcProduct element, Discipline discipline, IfcSettings settings = null)
         {
-            IEnumerable<IBHoMObject> result = FromIFC(element as dynamic, discipline, settings);
+            IEnumerable<IBHoMObject> result = FromIfc(element as dynamic, discipline, settings);
             if (result == null)
             {
                 BH.Engine.Reflection.Compute.RecordError($"IFC element conversion to BHoM failed for discipline {discipline}. A CustomObject is returned instead.");
@@ -50,7 +50,7 @@ namespace BH.Adapter.IFC
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcSlab element, Discipline discipline, IfcSettings settings)
+        public static IEnumerable<IBHoMObject> FromIfc(this IIfcSlab element, Discipline discipline, IfcSettings settings)
         {
             switch (discipline)
             {
@@ -61,7 +61,7 @@ namespace BH.Adapter.IFC
 
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcReinforcingBar element, Discipline discipline, IfcSettings settings)
+        public static IEnumerable<IBHoMObject> FromIfc(this IIfcReinforcingBar element, Discipline discipline, IfcSettings settings)
         {
             switch (discipline)
             {
@@ -72,7 +72,7 @@ namespace BH.Adapter.IFC
 
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcSpace element, Discipline discipline, IfcSettings settings)
+        public static IEnumerable<IBHoMObject> FromIfc(this IIfcSpace element, Discipline discipline, IfcSettings settings)
         {
             switch (discipline)
             {
