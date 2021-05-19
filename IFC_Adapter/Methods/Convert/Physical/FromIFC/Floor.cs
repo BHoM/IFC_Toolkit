@@ -46,7 +46,7 @@ namespace BH.Adapter.IFC
             settings = settings.DefaultIfNull();
 
             //TODO: refine this!
-            return new Floor();
+            return new Floor { Name = element.Name };
         }
 
         /***************************************************/
