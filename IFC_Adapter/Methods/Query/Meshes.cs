@@ -20,63 +20,67 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
-using BH.oM.Data.Requests;
-using BH.oM.Physical.Materials;
-using System;
+using BH.Engine.Geometry;
+using BH.oM.Geometry;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Xbim.Common;
+using Xbim.Common.Geometry;
+using Xbim.Common.XbimExtensions;
+using Xbim.ModelGeometry.Scene;
 
-namespace BH.Engine.Adapters.IFC
+namespace BH.Adapter.IFC
 {
     public static partial class Query
     {
         /***************************************************/
-        /****             Interface Methods             ****/
-        /***************************************************/
-
-        public static List<IPersistEntity> IIFCEntities(this Xbim.Ifc.IfcStore model, IRequest request)
-        {
-            return IFCEntities(model, request as dynamic);
-        }
-
-
-        /***************************************************/
         /****              Public Methods               ****/
         /***************************************************/
 
-        public static List<IPersistEntity> IFCEntities(this Xbim.Ifc.IfcStore model, FilterRequest request)
+        public static List<Mesh> Meshes(this XbimShapeInstance instance, Xbim3DModelContext context)
         {
-            if (model == null || request?.Type == null)
-                return null;
+            List<Mesh> result;
+
+            //Instance's geometry
+            XbimShapeGeometry geometry = context.ShapeGeometry(instance);
+            byte[] data = ((IXbimShapeGeometryData)geometry).ShapeData;
             
-            if (!typeof(IBHoMObject).IsAssignableFrom(request.Type))
+            //If you want to get all the faces and trinagulation use this
+            using (var stream = new MemoryStream(data))
             {
-                BH.Engine.Reflection.Compute.RecordError($"Input type {request.Type} is not a BHoM type.");
-                return null;
+                using (var reader = new BinaryReader(stream))
+                {
+                    XbimShapeTriangulation shape = reader.ReadShapeTriangulation();
+                    result = shape.Meshes();
+                }
             }
 
-            if (request.Type == typeof(IBHoMObject) || request.Type == typeof(BHoMObject) || request.Type == typeof(IMaterialProperties))
-            {
-                BH.Engine.Reflection.Compute.RecordError($"It is not allowed to pull elements of type {request.Type} because it is too general, please try to narrow the filter down.");
-                return null;
-            }
-
-            IEnumerable<Type> correspondentTypes = request.Type.CorrespondentIFCTypes();
-
-            return model.Instances.Where(x => correspondentTypes.Any(y => y.IsAssignableFrom(x.GetType()))).ToList();
+            TransformMatrix transform = instance.Transformation.TransformMatrixFromIFC();
+            return result.Select(x => x.Transform(transform)).ToList();
         }
 
-
-        /***************************************************/
-        /****             Fallback Methods              ****/
         /***************************************************/
 
-        public static List<IPersistEntity> IFCEntities(this Xbim.Ifc.IfcStore model, IRequest request)
+        public static List<Mesh> Meshes(this XbimShapeTriangulation shape)
         {
-            BH.Engine.Reflection.Compute.RecordError($"Request of type {request.GetType()} is not supported.");
-            return null;
+            List<Mesh> result = new List<Mesh>();
+            List<Point> allVertices = shape.Vertices.Select(x => x.PointFromIFC()).ToList();
+
+            foreach (XbimFaceTriangulation subMesh in shape.Faces)
+            {
+                Mesh mesh = new Mesh();
+                List<int> uniqueIds = subMesh.Indices.Distinct().ToList();
+                mesh.Vertices = uniqueIds.Select(i => allVertices[i]).ToList();
+                
+                for (int i = 0; i < subMesh.TriangleCount; i++)
+                {
+                    mesh.Faces.Add(new Face { A = uniqueIds.IndexOf(subMesh.Indices[3 * i]), B = uniqueIds.IndexOf(subMesh.Indices[3 * i + 1]), C = uniqueIds.IndexOf(subMesh.Indices[3 * i + 2]) });
+                }
+
+                result.Add(mesh);
+            }
+
+            return result;
         }
 
         /***************************************************/

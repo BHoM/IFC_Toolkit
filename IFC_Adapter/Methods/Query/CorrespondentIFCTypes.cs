@@ -19,56 +19,58 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
-using BH.oM.Adapters.IFC;
-using BH.oM.Base;
+ 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Xbim.Ifc2x3.Interfaces;
 
-namespace BH.Engine.Adapters.IFC
+namespace BH.Adapter.IFC
 {
-    public static partial class Convert
+    public static partial class Query
     {
         /***************************************************/
-        /****             Interface Methods             ****/
+        /****              Public methods               ****/
         /***************************************************/
 
-        public static IEnumerable<IBHoMObject> IFromIFC(this IIfcElement element, Discipline discipline, IFCSettings settings = null)
+        public static IEnumerable<Type> CorrespondentIFCTypes(this Type bHoMType)
         {
-            IEnumerable<IBHoMObject> result = FromIFC(element as dynamic, discipline, settings);
-            if (result == null)
-                BH.Engine.Reflection.Compute.RecordError($"IFC element conversion to BHoM failed for discipline {discipline}.");
+            if (m_IFCTypes.ContainsKey(bHoMType))
+                return m_IFCTypes[bHoMType];
 
-            return result;
-        }
-
-
-        /***************************************************/
-        /****              Public Methods               ****/
-        /***************************************************/
-
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcSlab element, Discipline discipline, IFCSettings settings)
-        {
-            switch (discipline)
+            HashSet<Type> iFCTypes = new HashSet<Type>();
+            BindingFlags bindingBHoM = BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static;
+            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
             {
-                default:
-                    return new List<IBHoMObject> { element.FloorFromIFC(settings) };
+                if (t.IsInterface || !t.IsAbstract || t.Name != "Convert")
+                    continue;
+
+                MethodInfo[] typeMethods = t.GetMethods(bindingBHoM);
+                Type ienumType = typeof(IEnumerable<>).MakeGenericType(bHoMType);
+                foreach (MethodInfo mi in typeMethods.Where(x => x.Name.EndsWith("FromIFC")))
+                {
+                    if (bHoMType.IsAssignableFrom(mi.ReturnType) || ienumType.IsAssignableFrom(mi.ReturnType))
+                    {
+                        Type parameterType = mi.GetParameters().First().ParameterType;
+                        if (parameterType != typeof(IIfcObject) && typeof(IIfcObject).IsAssignableFrom(parameterType))
+                            iFCTypes.Add(parameterType);
+                    }
+                }
             }
+
+            m_IFCTypes.Add(bHoMType, iFCTypes);
+            return iFCTypes;
         }
+
 
         /***************************************************/
+        /****              Private Fields               ****/
+        /***************************************************/
 
-        public static IEnumerable<IBHoMObject> FromIFC(this IIfcReinforcingBar element, Discipline discipline, IFCSettings settings)
-        {
-            switch (discipline)
-            {
-                default:
-                    return new List<IBHoMObject> { element.ReinforcingBarFromIFC(settings) };
-            }
-        }
+        private static Dictionary<Type, HashSet<Type>> m_IFCTypes = new Dictionary<Type, HashSet<Type>>();
 
         /***************************************************/
     }
 }
-
 

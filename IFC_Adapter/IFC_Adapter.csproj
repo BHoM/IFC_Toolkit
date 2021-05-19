@@ -68,6 +68,16 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Diffing_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Dimensional_oM">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Dimensional_oM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Geometry_Engine">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Geometry_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_oM.dll</HintPath>
       <Private>False</Private>
@@ -98,6 +108,10 @@
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Physical_oM, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Physical_oM.dll</HintPath>
     </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
@@ -212,8 +226,16 @@
     <Compile Include="AdapterActions\Remove.cs" />
     <Compile Include="AdapterActions\Push.cs" />
     <Compile Include="AdapterActions\Pull.cs" />
+    <Compile Include="Methods\Convert\FromIFC.cs" />
+    <Compile Include="Methods\Convert\Geometry\FromIFC\Point.cs" />
+    <Compile Include="Methods\Convert\Geometry\FromIFC\TransformMatrix.cs" />
+    <Compile Include="Methods\Convert\Physical\FromIFC\Floor.cs" />
+    <Compile Include="Methods\Convert\Physical\FromIFC\ReinforcingBar.cs" />
     <Compile Include="CRUD\Read.cs" />
     <Compile Include="IFCAdapter.cs" />
+    <Compile Include="Methods\Query\CorrespondentIFCTypes.cs" />
+    <Compile Include="Methods\Query\IFCEntities.cs" />
+    <Compile Include="Methods\Query\Meshes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +251,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
