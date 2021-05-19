@@ -46,7 +46,7 @@ namespace BH.Adapter.IFC
             settings = settings.DefaultIfNull();
 
             //TODO: refine this!
-            return new PrimaryReinforcingBar();
+            return new PrimaryReinforcingBar { Name = element.Name };
         }
 
         /***************************************************/
