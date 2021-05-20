@@ -94,9 +94,6 @@ namespace BH.Adapter.IFC
                 return false;
             }
             
-            // By default, the objects are appendend to the file if it exists already.
-            this.m_AdapterSettings.DefaultPushType = oM.Adapter.PushType.CreateOnly;
-
             return true;
         }
 
