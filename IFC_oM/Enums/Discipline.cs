@@ -29,7 +29,7 @@ namespace BH.oM.Adapters.IFC
     [Description("Enumerator allowing choosing to which discipline (and corresponding namespace) should IFC elements be converted on pull.")]
     public enum Discipline
     {
-        [Description("Default discipline to be used.")]
+        [Description("Default discipline. Depending on the type, the most suitable discipline will be used per each object.")]
         Undefined,
         [Description("Elements to be converted to types from BH.oM.Environment. If no suitable conversion exists, default discipline to be used.")]
         Environmental,
@@ -45,4 +45,3 @@ namespace BH.oM.Adapters.IFC
 
     /***************************************************/
 }
-
