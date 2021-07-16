@@ -63,9 +63,14 @@
     <Compile Include="Config\IfcPullConfig.cs" />
     <Compile Include="Enums\Discipline.cs" />
     <Compile Include="Misc\IfcRepresentation.cs" />
+    <Compile Include="IfcProperties\IfcProperty.cs" />
+    <Compile Include="IfcProperties\IfcPropertiesToPush.cs" />
+    <Compile Include="IfcProperties\IfcPulledProperties.cs" />
+    <Compile Include="IfcProperties\IIfcPropertyFragment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\IfcSettings.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
