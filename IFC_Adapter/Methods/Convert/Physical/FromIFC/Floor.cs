@@ -26,6 +26,8 @@ using BH.oM.Base;
 using BH.oM.Physical.Elements;
 using System.Collections.Generic;
 using Xbim.Ifc2x3.Interfaces;
+using Xbim.Ifc2x3.Kernel;
+using Xbim.Ifc2x3.PropertyResource;
 
 namespace BH.Adapter.IFC
 {
@@ -43,10 +45,19 @@ namespace BH.Adapter.IFC
                 return null;
             }
 
-            settings = settings.DefaultIfNull();
+            IfcObject ifcObject = element as IfcObject;
+            if (ifcObject == null)
+            {
+                BH.Engine.Reflection.Compute.RecordError("The IFC element could not be read due to an internal error.");
+                return null;
+            }
 
+            settings = settings.DefaultIfNull();
+            
             //TODO: refine this!
-            return new Floor { Name = element.Name };
+            Floor floor = new Floor { Name = element.Name };
+            floor.CopyParameters(ifcObject);
+            return floor;
         }
 
         /***************************************************/
