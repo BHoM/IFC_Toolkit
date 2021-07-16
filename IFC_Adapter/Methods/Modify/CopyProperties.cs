@@ -20,47 +20,39 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Adapters.IFC;
-using BH.oM.Adapters.IFC;
+using BH.oM.Adapters.IFC.Properties;
 using BH.oM.Base;
-using BH.oM.Environment.Elements;
 using System.Collections.Generic;
-using Xbim.Ifc2x3.Interfaces;
 using Xbim.Ifc2x3.Kernel;
+using Xbim.Ifc2x3.PropertyResource;
 
 namespace BH.Adapter.IFC
 {
-    public static partial class Convert
+    public static partial class Modify
     {
         /***************************************************/
-        /****              Public Methods               ****/
+        /****              Public methods               ****/
         /***************************************************/
 
-        public static Space SpaceFromIfc(this IIfcSpace element, IfcSettings settings)
+        public static void CopyParameters(this IBHoMObject bHoMObject, IfcObject element)
         {
-            if (element == null)
+            if (bHoMObject == null || element == null)
+                return;
+
+            List<BH.oM.Adapters.IFC.Properties.IfcProperty> properties = new List<BH.oM.Adapters.IFC.Properties.IfcProperty>();
+            
+            foreach (IfcPropertySet propSet in element.PropertySets)
             {
-                BH.Engine.Reflection.Compute.RecordError("The IFC element could not be converted because it was null.");
-                return null;
+                foreach (Xbim.Ifc2x3.PropertyResource.IfcProperty prop in propSet.HasProperties)
+                {
+                    IfcPropertySingleValue ifcValue = element.GetPropertySingleValue(propSet.Name, prop.Name);
+                    properties.Add(new oM.Adapters.IFC.Properties.IfcProperty { Name = prop.Name, PropertySet = propSet.Name, Value = ifcValue.NominalValue?.Value });
+                }
             }
 
-            IfcObject ifcObject = element as IfcObject;
-            if (ifcObject == null)
-            {
-                BH.Engine.Reflection.Compute.RecordError("The IFC element could not be read due to an internal error.");
-                return null;
-            }
-
-            settings = settings.DefaultIfNull();
-
-            //TODO: refine this!
-            Space space = new Space { Name = element.Name };
-            space.CopyParameters(ifcObject);
-            return space;
+            bHoMObject.Fragments.Add(new IfcPulledProperties(properties));
         }
 
         /***************************************************/
     }
 }
-
-
