@@ -34,23 +34,23 @@ namespace BH.Adapter.IFC
         /****              Public methods               ****/
         /***************************************************/
 
-        public static void CopyParameters(this IBHoMObject bHoMObject, IfcObject element)
+        public static void CopyIfcPropertiesToFragment(this IBHoMObject target, IfcObject from)
         {
-            if (bHoMObject == null || element == null)
+            if (target == null || from == null)
                 return;
 
             List<BH.oM.Adapters.IFC.Properties.IfcProperty> properties = new List<BH.oM.Adapters.IFC.Properties.IfcProperty>();
             
-            foreach (IfcPropertySet propSet in element.PropertySets)
+            foreach (IfcPropertySet propSet in from.PropertySets)
             {
                 foreach (Xbim.Ifc2x3.PropertyResource.IfcProperty prop in propSet.HasProperties)
                 {
-                    IfcPropertySingleValue ifcValue = element.GetPropertySingleValue(propSet.Name, prop.Name);
+                    IfcPropertySingleValue ifcValue = from.GetPropertySingleValue(propSet.Name, prop.Name);
                     properties.Add(new oM.Adapters.IFC.Properties.IfcProperty { Name = prop.Name, PropertySet = propSet.Name, Value = ifcValue.NominalValue?.Value });
                 }
             }
 
-            bHoMObject.Fragments.Add(new IfcPulledProperties(properties));
+            target.Fragments.Add(new IfcPulledProperties(properties));
         }
 
         /***************************************************/

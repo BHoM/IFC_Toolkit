@@ -53,7 +53,7 @@ namespace BH.Adapter.IFC
             
             //TODO: refine this!
             Floor floor = new Floor { Name = element.Name };
-            floor.CopyParameters(ifcObject);
+            floor.CopyIfcPropertiesToFragment(ifcObject);
             return floor;
         }
 
