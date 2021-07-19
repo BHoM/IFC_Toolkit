@@ -52,7 +52,7 @@ namespace BH.Adapter.IFC
 
             //TODO: refine this!
             PrimaryReinforcingBar reinforcingBar = new PrimaryReinforcingBar { Name = element.Name };
-            reinforcingBar.CopyParameters(ifcObject);
+            reinforcingBar.CopyIfcPropertiesToFragment(ifcObject);
             return reinforcingBar;
         }
 

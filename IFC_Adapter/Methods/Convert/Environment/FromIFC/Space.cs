@@ -52,7 +52,7 @@ namespace BH.Adapter.IFC
 
             //TODO: refine this!
             Space space = new Space { Name = element.Name };
-            space.CopyParameters(ifcObject);
+            space.CopyIfcPropertiesToFragment(ifcObject);
             return space;
         }
 
