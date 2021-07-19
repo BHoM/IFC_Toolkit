@@ -44,12 +44,9 @@ namespace BH.Adapter.IFC
                 return null;
             }
 
-            IfcObject ifcObject = element as IfcObject;
+            IfcObject ifcObject = element.CastToIfcObject();
             if (ifcObject == null)
-            {
-                BH.Engine.Reflection.Compute.RecordError("The IFC element could not be read due to an internal error.");
                 return null;
-            }
 
             settings = settings.DefaultIfNull();
 
