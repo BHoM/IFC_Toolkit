@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Base;
 using BH.oM.Adapters.IFC.Properties;
 using BH.oM.Base;
 using BH.oM.Reflection.Attributes;
@@ -45,8 +46,8 @@ namespace BH.Engine.Adapters.IFC
 
             Compute.UnsupportedUnitsWarning();
 
-            IfcPulledProperties pullFragment = bHoMObject.Fragments?.FirstOrDefault(x => x is IfcPulledProperties) as IfcPulledProperties;
-            IfcPropertiesToPush pushFragment = bHoMObject.Fragments?.FirstOrDefault(x => x is IfcPropertiesToPush) as IfcPropertiesToPush;
+            IfcPulledProperties pullFragment = bHoMObject.FindFragment<IfcPulledProperties>();
+            IfcPropertiesToPush pushFragment = bHoMObject.FindFragment<IfcPropertiesToPush>();
 
             List<IfcProperty> result = new List<IfcProperty>();
             if (pullFragment?.Properties != null)

@@ -61,8 +61,7 @@ namespace BH.Engine.Adapters.IFC
             IfcPropertiesToPush fragment = new IfcPropertiesToPush { Properties = properties };
 
             IBHoMObject obj = bHoMObject.ShallowClone();
-            obj.Fragments = new FragmentSet(bHoMObject.Fragments.Where(x => !(x is IfcPropertiesToPush)).ToList());
-            obj.Fragments.Add(fragment);
+            obj.Fragments.AddOrReplace(fragment);
 
             Compute.UnsupportedUnitsWarning();
 
@@ -102,8 +101,7 @@ namespace BH.Engine.Adapters.IFC
             IfcPropertiesToPush fragment = new IfcPropertiesToPush { Properties = properties };
 
             IBHoMObject obj = bHoMObject.ShallowClone();
-            obj.Fragments = new FragmentSet(bHoMObject.Fragments.Where(x => !(x is IfcPropertiesToPush)).ToList());
-            obj.Fragments.Add(fragment);
+            obj.Fragments.AddOrReplace(fragment);
 
             Compute.UnsupportedUnitsWarning();
 
