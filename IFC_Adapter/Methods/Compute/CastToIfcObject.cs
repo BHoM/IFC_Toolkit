@@ -20,45 +20,26 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Engine.Adapters.IFC;
-using BH.oM.Adapters.IFC;
-using BH.oM.Base;
-using BH.oM.Physical.Elements;
-using System.Collections.Generic;
 using Xbim.Ifc2x3.Interfaces;
 using Xbim.Ifc2x3.Kernel;
-using Xbim.Ifc2x3.PropertyResource;
 
 namespace BH.Adapter.IFC
 {
-    public static partial class Convert
+    public static partial class Compute
     {
         /***************************************************/
-        /****              Public Methods               ****/
+        /****              Public methods               ****/
         /***************************************************/
 
-        public static Floor FloorFromIfc(this IIfcSlab element, IfcSettings settings)
+        public static IfcObject CastToIfcObject(this IIfcObject ifcObject)
         {
-            if (element == null)
-            {
-                BH.Engine.Reflection.Compute.RecordError("The IFC element could not be converted because it was null.");
-                return null;
-            }
+            IfcObject cast = ifcObject as IfcObject;
+            if (cast == null)
+                BH.Engine.Reflection.Compute.RecordError($"The IFC element could not be cast to {nameof(IfcObject)}.");
 
-            IfcObject ifcObject = element.CastToIfcObject();
-            if (ifcObject == null)
-                return null;
-
-            settings = settings.DefaultIfNull();
-            
-            //TODO: refine this!
-            Floor floor = new Floor { Name = element.Name };
-            floor.CopyParameters(ifcObject);
-            return floor;
+            return cast;
         }
 
         /***************************************************/
     }
 }
-
-
