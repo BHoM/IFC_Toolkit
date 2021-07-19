@@ -26,6 +26,7 @@ using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
+using BH.Engine.Base;
 
 namespace BH.Engine.Adapters.IFC
 {
@@ -46,7 +47,7 @@ namespace BH.Engine.Adapters.IFC
 
             Compute.UnsupportedUnitsWarning();
 
-            IfcPropertiesToPush pushFragment = bHoMObject.Fragments?.FirstOrDefault(x => x is IfcPropertiesToPush) as IfcPropertiesToPush;
+            IfcPropertiesToPush pushFragment = bHoMObject.FindFragment<IfcPropertiesToPush>();
             if (pushFragment?.Properties != null)
             {
                 IfcProperty prop = pushFragment.Properties.FirstOrDefault(x => x.Name == propertyName);
@@ -54,7 +55,7 @@ namespace BH.Engine.Adapters.IFC
                     return prop.Value;
             }
 
-            IfcPulledProperties pullFragment = bHoMObject.Fragments?.FirstOrDefault(x => x is IfcPulledProperties) as IfcPulledProperties;
+            IfcPulledProperties pullFragment = bHoMObject.FindFragment<IfcPulledProperties>();
             if (pullFragment?.Properties != null)
             {
                 IfcProperty prop = pullFragment.Properties.FirstOrDefault(x => x.Name == propertyName);
@@ -68,7 +69,7 @@ namespace BH.Engine.Adapters.IFC
                 IBHoMObject bHoMProp = bHoMPropEntry.Value as IBHoMObject;
                 if (bHoMProp != null)
                 {
-                    IfcPulledProperties typePullFragment = bHoMProp.Fragments?.FirstOrDefault(x => x is IfcPulledProperties) as IfcPulledProperties;
+                    IfcPulledProperties typePullFragment = bHoMProp.FindFragment<IfcPulledProperties>();
                     if (typePullFragment?.Properties != null)
                     {
                         IfcProperty prop = typePullFragment.Properties.FirstOrDefault(x => x.Name == propertyName);
