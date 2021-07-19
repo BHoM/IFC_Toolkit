@@ -35,7 +35,7 @@ namespace BH.Adapter.IFC
         {
             IfcObject cast = ifcObject as IfcObject;
             if (cast == null)
-                BH.Engine.Reflection.Compute.RecordError($"The IFC element could not be cast to {nameof(IfcObject)}.");
+                BH.Engine.Reflection.Compute.RecordError($"The provided IFC object of type {ifcObject.GetType().Name} could not be cast to {nameof(IfcObject)}.");
 
             return cast;
         }
