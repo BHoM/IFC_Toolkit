@@ -201,7 +201,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compute\UnsupportedUnitsWarning.cs" />
     <Compile Include="Create\IfcPullConfig.cs" />
     <Compile Include="Modify\SetIfcProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

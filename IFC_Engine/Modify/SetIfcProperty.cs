@@ -63,7 +63,8 @@ namespace BH.Engine.Adapters.IFC
             IBHoMObject obj = bHoMObject.ShallowClone();
             obj.Fragments.AddOrReplace(fragment);
 
-            Compute.UnsupportedUnitsWarning();
+            // Warning to be removed once the support for units is added
+            BH.Engine.Reflection.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
 
             return obj;
         }
@@ -103,7 +104,8 @@ namespace BH.Engine.Adapters.IFC
             IBHoMObject obj = bHoMObject.ShallowClone();
             obj.Fragments.AddOrReplace(fragment);
 
-            Compute.UnsupportedUnitsWarning();
+            // Warning to be removed once the support for units is added
+            BH.Engine.Reflection.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
 
             return obj;
         }
