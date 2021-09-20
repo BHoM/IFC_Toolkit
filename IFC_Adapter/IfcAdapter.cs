@@ -86,7 +86,18 @@ namespace BH.Adapter.IFC
 
             try
             {
-                m_LoadedModel = IfcStore.Open(location);
+                var editor = new XbimEditorCredentials
+                {
+                    //ApplicationDevelopersName = "John Doe",
+                    ApplicationFullName = "IFC_Toolkit",
+                    ApplicationIdentifier = "BHoM",
+                    //ApplicationVersion = "5.0",
+                    //EditorsFamilyName = "Doe",
+                    //EditorsGivenName = "John",
+                    //EditorsOrganisationName = "Buro Happold"
+                };
+
+                m_LoadedModel = IfcStore.Open(location, null, null, null, Xbim.IO.XbimDBAccess.ReadWrite);
             }
             catch (Exception ex)
             {
