@@ -45,7 +45,7 @@ namespace BH.Engine.Adapters.IFC
                 return null;
 
             // Warning to be removed once the support for units is added
-            BH.Engine.Reflection.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
+            BH.Engine.Reflection.Compute.RecordWarning("Please note that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
 
             IfcPulledProperties pullFragment = bHoMObject.FindFragment<IfcPulledProperties>();
             IfcPropertiesToPush pushFragment = bHoMObject.FindFragment<IfcPropertiesToPush>();
