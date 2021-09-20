@@ -37,7 +37,7 @@ namespace BH.Adapter.IFC
             if (target == null || from == null)
                 return;
             
-            target.Fragments.Add(new IfcIdentifiers(from.GlobalId));
+            target.Fragments.Add(new IfcIdentifiers(from.GlobalId.ToString()));
         }
 
         /***************************************************/

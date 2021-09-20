@@ -34,12 +34,24 @@ namespace BH.Adapter.IFC
 
         public override List<object> Push(IEnumerable<object> objects, string tag = "", PushType pushType = PushType.AdapterDefault, ActionConfig actionConfig = null)
         {
-            BH.Engine.Reflection.Compute.RecordError("Push action is not implemented in the IFC_Toolkit");
-            return null;
+            if (m_LoadedModel == null)
+            {
+                Engine.Reflection.Compute.RecordWarning("The .ifc file has not been loaded correctly.");
+                return new List<object>();
+            }
+            
+            try
+            {
+                return base.Push(objects, tag, pushType, actionConfig);
+            }
+            catch
+            {
+                BH.Engine.Reflection.Compute.RecordError("Push to IFC failed.");
+                return new List<object>();
+            }
         }
 
         /***************************************************/
-
     }
 }
 
