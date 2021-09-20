@@ -248,6 +248,7 @@
     <Compile Include="CRUD\Read.cs" />
     <Compile Include="IfcAdapter.cs" />
     <Compile Include="Methods\Modify\CopyIdentifiersToFragment.cs" />
+    <Compile Include="Methods\Modify\CopyIfcPropertiesFromFragment.cs" />
     <Compile Include="Methods\Modify\CopyIfcPropertiesToFragment.cs" />
     <Compile Include="Methods\Query\CorrespondentIfcTypes.cs" />
     <Compile Include="Methods\Query\IfcEntities.cs" />

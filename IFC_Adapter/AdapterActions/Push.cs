@@ -23,6 +23,7 @@
 using BH.oM.Adapter;
 using System;
 using System.Collections.Generic;
+using Xbim.Common;
 
 namespace BH.Adapter.IFC
 {
@@ -39,15 +40,21 @@ namespace BH.Adapter.IFC
                 Engine.Reflection.Compute.RecordWarning("The .ifc file has not been loaded correctly.");
                 return new List<object>();
             }
-            
-            try
+
+            using (ITransaction transaction = m_LoadedModel.BeginTransaction("Push from BHoM"))
             {
-                return base.Push(objects, tag, pushType, actionConfig);
-            }
-            catch
-            {
-                BH.Engine.Reflection.Compute.RecordError("Push to IFC failed.");
-                return new List<object>();
+                try
+                {
+                    List<object> result = base.Push(objects, tag, pushType, actionConfig);
+                    transaction.Commit();
+                    m_LoadedModel.SaveAs(m_LoadedModel.FileName);
+                    return result;
+                }
+                catch (Exception e)
+                {
+                    BH.Engine.Reflection.Compute.RecordError($"Push to IFC failed with the following error message:\n{e.Message}");
+                    return new List<object>();
+                }
             }
         }
 

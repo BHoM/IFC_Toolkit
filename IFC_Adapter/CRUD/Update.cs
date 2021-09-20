@@ -24,10 +24,14 @@ using BH.Engine.Adapters.IFC;
 using BH.Engine.Base;
 using BH.oM.Adapter;
 using BH.oM.Adapters.IFC;
+using BH.oM.Adapters.IFC.Properties;
 using BH.oM.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xbim.Ifc2x3.Kernel;
+using Xbim.Ifc2x3.MeasureResource;
+using Xbim.Ifc2x3.PropertyResource;
 
 namespace BH.Adapter.IFC
 {
@@ -54,16 +58,23 @@ namespace BH.Adapter.IFC
 
             foreach (IBHoMObject obj in bhomObjects)
             {
-                string id = obj.FindFragment<IfcIdentifiers>()?.PersistentId as string;
-                if (string.IsNullOrWhiteSpace(id))
-                    continue;
+                try
+                {
+                    string id = obj.FindFragment<IfcIdentifiers>()?.PersistentId as string;
+                    if (string.IsNullOrWhiteSpace(id))
+                        continue;
 
-                if (!ifcObjects.ContainsKey(id))
-                    continue;
+                    if (!ifcObjects.ContainsKey(id))
+                        continue;
 
-                BH.Engine.Reflection.Compute.RecordWarning($"Attempting to update element {ifcObjects[id]} based on BHoM object {obj.BHoM_Guid}");
+                    ifcObjects[id].CopyIfcPropertiesFromFragment(obj);
+                }
+                catch (Exception e)
+                {
+                    BH.Engine.Reflection.Compute.RecordError($"Update of the IFC element based on BHoM object failed. BHoM_Guid:{obj.BHoM_Guid}\nException message: {e.Message}");
+                }
             }
-
+            
             return true;
         }
 
