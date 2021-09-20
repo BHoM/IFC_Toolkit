@@ -21,93 +21,50 @@
  */
 
 using BH.Engine.Adapters.IFC;
+using BH.Engine.Base;
 using BH.oM.Adapter;
 using BH.oM.Adapters.IFC;
 using BH.oM.Base;
-using BH.oM.Data.Requests;
-using BH.oM.Geometry;
 using System.Collections.Generic;
 using System.Linq;
-using Xbim.Common.Geometry;
-using Xbim.Ifc2x3.Interfaces;
-using Xbim.ModelGeometry.Scene;
+using Xbim.Ifc2x3.Kernel;
 
 namespace BH.Adapter.IFC
 {
     public partial class IfcAdapter : BHoMAdapter
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /****           Protected Methods               ****/
         /***************************************************/
 
-        protected override IEnumerable<IBHoMObject> Update(IRequest request, ActionConfig actionConfig = null)
+        protected override bool IUpdate<T>(IEnumerable<T> objects, ActionConfig actionConfig = null)
+        {            
+            bool success = true;
+            success = Update(objects as dynamic);
+            return success;
+        }
+
+        /***************************************************/
+
+        protected bool Update(IEnumerable<IBHoMObject> bhomObjects)
         {
-            if (request == null)
-            {
-                BH.Engine.Reflection.Compute.RecordError("The request is null, pull failed.");
-                return new List<IBHoMObject>();
-            }
-
-            // Get the toolkit-specific PullConfig
-            IfcPullConfig config = actionConfig as IfcPullConfig;
-            if (config == null)
-            {
-                config = new IfcPullConfig();
-                BH.Engine.Reflection.Compute.RecordNote("Config has not been specified, default config is used.");
-            }
-
             // Get the settings
             IfcSettings settings = this.IFCSettings.DefaultIfNull();
+            Dictionary<string, IfcObject> ifcObjects = m_LoadedModel.Instances.OfType<IfcObject>().ToDictionary(x => x.GlobalId.ToString(), x => x);
 
-            // Get the discipline coming from the request/PullConfig
-            Discipline? requestDiscipline = request.Discipline(config.Discipline);
-            if (requestDiscipline == null)
+            foreach (IBHoMObject obj in bhomObjects)
             {
-                BH.Engine.Reflection.Compute.RecordError("Conflicting disciplines have been detected.");
-                return new List<IBHoMObject>();
-            }
-
-            Discipline discipline = requestDiscipline.Value;
-
-            // If instructed to pull mesh representations, the below variable will be assigned
-            List<XbimShapeInstance> shapeInstances = null;
-
-            if (config.PullMeshes)
-            {
-                if (m_3DContext == null)
-                {
-                    m_3DContext = new Xbim3DModelContext(m_LoadedModel);
-                    m_3DContext.CreateContext();
-                }
-
-                shapeInstances = m_3DContext.ShapeInstances().ToList();
-            }
-
-            List<IBHoMObject> result = new List<IBHoMObject>();
-            foreach (var entity in m_LoadedModel.IIfcEntities(request))
-            {
-                IIfcProduct element = entity as IIfcProduct;
-                if (element == null)
+                string id = obj.FindFragment<IfcIdentifiers>()?.PersistentId as string;
+                if (string.IsNullOrWhiteSpace(id))
                     continue;
 
-                IEnumerable<IBHoMObject> converted = element.IFromIfc(discipline, settings);
+                if (!ifcObjects.ContainsKey(id))
+                    continue;
 
-                // Pull mesh representations if requested in PullConfig
-                if (shapeInstances != null)
-                {
-                    List<Mesh> meshes = shapeInstances.Where(x => x.IfcProductLabel == element.EntityLabel).SelectMany(x => x.Meshes(m_3DContext)).ToList();
-                    IfcRepresentation representation = new IfcRepresentation(meshes);
-
-                    foreach (IBHoMObject obj in converted)
-                    {
-                        obj.Fragments.Add(representation);
-                    }
-                }
-
-                result.AddRange(converted);
+                BH.Engine.Reflection.Compute.RecordWarning($"Attempting to update element {ifcObjects[id]} based on BHoM object {obj.BHoM_Guid}");
             }
 
-            return result;
+            return true;
         }
 
         /***************************************************/
