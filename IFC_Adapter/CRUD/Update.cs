@@ -74,6 +74,8 @@ namespace BH.Adapter.IFC
                     BH.Engine.Reflection.Compute.RecordError($"Update of the IFC element based on BHoM object failed. BHoM_Guid:{obj.BHoM_Guid}\nException message: {e.Message}");
                 }
             }
+
+            BH.Engine.Reflection.Compute.RecordWarning("Update of IFC elements is currently limited to updating the existing properties.");
             
             return true;
         }
