@@ -42,6 +42,12 @@ namespace BH.Adapter.IFC
                 return new List<IBHoMObject> { new CustomObject { Name = element.Name } };
             }
 
+            // Copy identifiers
+            foreach (IBHoMObject obj in result)
+            {
+                obj.CopyIdentifiersToFragment(element);
+            }
+
             return result;
         }
 

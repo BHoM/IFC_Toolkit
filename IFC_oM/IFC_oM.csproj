@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Config\IfcPullConfig.cs" />
     <Compile Include="Enums\Discipline.cs" />
+    <Compile Include="Misc\IfcIdentifiers.cs" />
     <Compile Include="Misc\IfcRepresentation.cs" />
     <Compile Include="IfcProperties\IfcProperty.cs" />
     <Compile Include="IfcProperties\IfcPropertiesToPush.cs" />
