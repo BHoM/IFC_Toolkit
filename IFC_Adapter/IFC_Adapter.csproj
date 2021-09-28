@@ -255,6 +255,7 @@
     <Compile Include="Methods\Query\Meshes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <Import Project="..\packages\Xbim.Geometry.Engine.Interop.5.1.403\build\net472\Xbim.Geometry.Engine.Interop.targets" />
   <ItemGroup>
     <ProjectReference Include="..\IFC_Engine\IFC_Engine.csproj">
       <Project>{41f37d36-a8e4-46b9-b59e-e1504280ce44}</Project>
@@ -288,11 +289,4 @@
 		xcopy "$(TargetDir)Xbim.Tessellator.dll"  "C:\ProgramData\BHoM\Assemblies" /Y
 	</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\Xbim.Geometry.Engine.Interop.5.1.403\build\net472\Xbim.Geometry.Engine.Interop.targets" Condition="Exists('..\packages\Xbim.Geometry.Engine.Interop.5.1.403\build\net472\Xbim.Geometry.Engine.Interop.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Xbim.Geometry.Engine.Interop.5.1.403\build\net472\Xbim.Geometry.Engine.Interop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xbim.Geometry.Engine.Interop.5.1.403\build\net472\Xbim.Geometry.Engine.Interop.targets'))" />
-  </Target>
 </Project>
