@@ -21,7 +21,7 @@
  */
 
 using BH.oM.Adapters.IFC;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 using System.ComponentModel;
 
 namespace BH.Engine.Adapters.IFC

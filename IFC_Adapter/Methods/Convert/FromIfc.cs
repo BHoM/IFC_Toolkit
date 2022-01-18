@@ -38,7 +38,7 @@ namespace BH.Adapter.IFC
             IEnumerable<IBHoMObject> result = FromIfc(element as dynamic, discipline, settings);
             if (result == null)
             {
-                BH.Engine.Reflection.Compute.RecordError($"IFC element conversion to BHoM failed for discipline {discipline}. A CustomObject is returned instead.");
+                BH.Engine.Base.Compute.RecordError($"IFC element conversion to BHoM failed for discipline {discipline}. A CustomObject is returned instead.");
                 return new List<IBHoMObject> { new CustomObject { Name = element.Name } };
             }
 

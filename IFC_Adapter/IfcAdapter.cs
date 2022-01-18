@@ -21,7 +21,7 @@
  */
 
 using BH.oM.Adapters.IFC;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 using System;
 using System.ComponentModel;
 using Xbim.Ifc;
@@ -74,13 +74,13 @@ namespace BH.Adapter.IFC
         {
             if (string.IsNullOrWhiteSpace(location))
             {
-                BH.Engine.Reflection.Compute.RecordError("Please specifiy a valid target location.");
+                BH.Engine.Base.Compute.RecordError("Please specifiy a valid target location.");
                 return false;
             }
 
             if (!location.ToLower().EndsWith(".ifc"))
             {
-                BH.Engine.Reflection.Compute.RecordError("The file needs to be in .ifc format.");
+                BH.Engine.Base.Compute.RecordError("The file needs to be in .ifc format.");
                 return false;
             }
 
@@ -101,7 +101,7 @@ namespace BH.Adapter.IFC
             }
             catch (Exception ex)
             {
-                BH.Engine.Reflection.Compute.RecordError($"The file failed to load with the following error:\n{ex.Message}");
+                BH.Engine.Base.Compute.RecordError($"The file failed to load with the following error:\n{ex.Message}");
                 return false;
             }
             

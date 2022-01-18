@@ -23,7 +23,7 @@
 using BH.Engine.Base;
 using BH.oM.Adapters.IFC.Properties;
 using BH.oM.Base;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -45,7 +45,7 @@ namespace BH.Engine.Adapters.IFC
                 return null;
 
             // Warning to be removed once the support for units is added
-            BH.Engine.Reflection.Compute.RecordWarning("Please note that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
+            BH.Engine.Base.Compute.RecordWarning("Please note that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
 
             IfcPulledProperties pullFragment = bHoMObject.FindFragment<IfcPulledProperties>();
             IfcPropertiesToPush pushFragment = bHoMObject.FindFragment<IfcPropertiesToPush>();
@@ -71,7 +71,7 @@ namespace BH.Engine.Adapters.IFC
                 }
 
                 if (mixed)
-                    BH.Engine.Reflection.Compute.RecordNote("Some of the properties were retrieved from collection of pulled ones, some from the ones meant to be pushed.");
+                    BH.Engine.Base.Compute.RecordNote("Some of the properties were retrieved from collection of pulled ones, some from the ones meant to be pushed.");
             }
 
             return result;

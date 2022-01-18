@@ -40,7 +40,7 @@ namespace BH.Adapter.IFC
         {
             if (element == null)
             {
-                BH.Engine.Reflection.Compute.RecordError("The IFC element could not be converted because it was null.");
+                BH.Engine.Base.Compute.RecordError("The IFC element could not be converted because it was null.");
                 return null;
             }
 

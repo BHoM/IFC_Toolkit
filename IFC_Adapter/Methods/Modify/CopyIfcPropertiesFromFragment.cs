@@ -66,13 +66,13 @@ namespace BH.Adapter.IFC
                                 }
                                 catch
                                 {
-                                    BH.Engine.Reflection.Compute.RecordError($"Property named {prop.Name} could not be set because the provided value has wrong type.\nElement name: {target.Name}, Element Id: {target.GlobalId}.");
+                                    BH.Engine.Base.Compute.RecordError($"Property named {prop.Name} could not be set because the provided value has wrong type.\nElement name: {target.Name}, Element Id: {target.GlobalId}.");
                                     continue;
                                 }
                                 target.SetPropertySingleValue(propSet.Name, prop.Name, newValue);
 
                                 if (set == true)
-                                    BH.Engine.Reflection.Compute.RecordWarning($"Ifc element has more than one property named {prop.Name}, all of them have been updated.\nElement name: {target.Name}, Element Id: {target.GlobalId}.");
+                                    BH.Engine.Base.Compute.RecordWarning($"Ifc element has more than one property named {prop.Name}, all of them have been updated.\nElement name: {target.Name}, Element Id: {target.GlobalId}.");
 
                                 set = true;
                             }
@@ -80,7 +80,7 @@ namespace BH.Adapter.IFC
                     }
 
                     if (set == false)
-                        BH.Engine.Reflection.Compute.RecordWarning($"Ifc element does not own any property named {prop.Name}, so it has not been updated.\nElement name: {target.Name}, Element Id: {target.GlobalId}.");
+                        BH.Engine.Base.Compute.RecordWarning($"Ifc element does not own any property named {prop.Name}, so it has not been updated.\nElement name: {target.Name}, Element Id: {target.GlobalId}.");
                 }
             }
         }

@@ -23,7 +23,7 @@
 using BH.Engine.Base;
 using BH.oM.Adapters.IFC.Properties;
 using BH.oM.Base;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -64,7 +64,7 @@ namespace BH.Engine.Adapters.IFC
             obj.Fragments.AddOrReplace(fragment);
 
             // Warning to be removed once the support for units is added
-            BH.Engine.Reflection.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
+            BH.Engine.Base.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
 
             return obj;
         }
@@ -83,7 +83,7 @@ namespace BH.Engine.Adapters.IFC
 
             if (propNames.Count != values.Count)
             {
-                BH.Engine.Reflection.Compute.RecordError("Number of input names needs to be equal to the number of input values. Properties have not been set.");
+                BH.Engine.Base.Compute.RecordError("Number of input names needs to be equal to the number of input values. Properties have not been set.");
                 return bHoMObject;
             }
 
@@ -105,7 +105,7 @@ namespace BH.Engine.Adapters.IFC
             obj.Fragments.AddOrReplace(fragment);
 
             // Warning to be removed once the support for units is added
-            BH.Engine.Reflection.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
+            BH.Engine.Base.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
 
             return obj;
         }

@@ -21,7 +21,7 @@
  */
 
 using BH.oM.Adapters.IFC;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 using System.ComponentModel;
 
 namespace BH.Engine.Adapters.IFC
@@ -40,7 +40,7 @@ namespace BH.Engine.Adapters.IFC
             if (settings == null)
             {
                 settings = new IfcSettings();
-                BH.Engine.Reflection.Compute.RecordNote("Settings have not been specified, default settings are used.");
+                BH.Engine.Base.Compute.RecordNote("Settings have not been specified, default settings are used.");
             }
 
             return settings;
