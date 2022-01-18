@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
@@ -36,25 +36,31 @@ namespace BH.Engine.Adapters.IFC
         /****              Public methods               ****/
         /***************************************************/
 
-        [Description("Attaches property to a BHoM object, which will be applied to a correspondent IFC element on Push.")]
-        [Input("bHoMObject", "BHoMObject to which the property will be attached.")]
-        [Input("propName", "Name of the property to be attached.")]
-        [Input("value", "Value of the property to be attached.")]
+        [Description("Attaches properties to a BHoM object, which will be applied to a correspondent IFC element on Push.")]
+        [Input("bHoMObject", "BHoMObject to which the properties will be attached.")]
+        [Input("propNames", "Names of the properties to be attached.")]
+        [Input("values", "Values of the properties to be attached.")]
         [Output("bHoMObject")]
-        public static IBHoMObject SetIfcProperty(this IBHoMObject bHoMObject, string propName, object value)
+        public static IBHoMObject SetIfcProperties(this IBHoMObject bHoMObject, List<string> propNames, List<object> values)
         {
             if (bHoMObject == null)
                 return null;
 
-            List<IfcProperty> properties = new List<IfcProperty> { new IfcProperty { Name = propName, Value = value } };
+            if (propNames.Count != values.Count)
+            {
+                BH.Engine.Base.Compute.RecordError("Number of input names needs to be equal to the number of input values. Properties have not been set.");
+                return bHoMObject;
+            }
+
+            List<IfcProperty> properties = propNames.Zip(values, (x, y) => new IfcProperty { Name = x, Value = y }).ToList();
 
             IfcPropertiesToPush existingFragment = bHoMObject.Fragments.FirstOrDefault(x => x is IfcPropertiesToPush) as IfcPropertiesToPush;
             if (existingFragment != null)
             {
-                foreach (IfcProperty prop in existingFragment.Properties)
+                foreach (IfcProperty property in existingFragment.Properties)
                 {
-                    if (prop.Name != propName)
-                        properties.Add(prop);
+                    if (propNames.All(x => property.Name != x))
+                        properties.Add(property);
                 }
             }
 

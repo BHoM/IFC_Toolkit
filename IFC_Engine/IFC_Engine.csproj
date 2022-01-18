@@ -202,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Create\IfcPullConfig.cs" />
+    <Compile Include="Modify\SetIfcProperties.cs" />
     <Compile Include="Modify\SetIfcProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\DefaultIfNull.cs" />
