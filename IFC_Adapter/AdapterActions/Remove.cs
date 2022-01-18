@@ -34,7 +34,7 @@ namespace BH.Adapter.IFC
 
         public override int Remove(IRequest request, ActionConfig actionConfig = null)
         {
-            BH.Engine.Reflection.Compute.RecordError("Remove action is not implemented in the IFC_Toolkit");
+            BH.Engine.Base.Compute.RecordError("Remove action is not implemented in the IFC_Toolkit");
             return 0;
         }
 

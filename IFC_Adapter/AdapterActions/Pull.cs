@@ -36,7 +36,7 @@ namespace BH.Adapter.IFC
         {
             if (m_LoadedModel == null)
             {
-                Engine.Reflection.Compute.RecordWarning("The .ifc file has not been loaded correctly.");
+                Engine.Base.Compute.RecordWarning("The .ifc file has not been loaded correctly.");
                 return new List<object>();
             }
 

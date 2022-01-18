@@ -41,13 +41,13 @@ namespace BH.Adapter.IFC
         {
             if (instance == null)
             {
-                BH.Engine.Reflection.Compute.RecordError("The meshes could not be extracted because the IFC element is null.");
+                BH.Engine.Base.Compute.RecordError("The meshes could not be extracted because the IFC element is null.");
                 return null;
             }
 
             if (context == null)
             {
-                BH.Engine.Reflection.Compute.RecordError("The meshes could not be extracted because the 3D model context is null.");
+                BH.Engine.Base.Compute.RecordError("The meshes could not be extracted because the 3D model context is null.");
                 return null;
             }
 
@@ -77,7 +77,7 @@ namespace BH.Adapter.IFC
         {
             if (shape == null)
             {
-                BH.Engine.Reflection.Compute.RecordError("The meshes could not be extracted because the shape triangulation model is null.");
+                BH.Engine.Base.Compute.RecordError("The meshes could not be extracted because the shape triangulation model is null.");
                 return null;
             }
 

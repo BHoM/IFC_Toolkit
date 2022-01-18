@@ -44,7 +44,7 @@ namespace BH.Adapter.IFC
         {
             if (request == null)
             {
-                BH.Engine.Reflection.Compute.RecordError("The request is null, pull failed.");
+                BH.Engine.Base.Compute.RecordError("The request is null, pull failed.");
                 return new List<IBHoMObject>();
             }
 
@@ -53,7 +53,7 @@ namespace BH.Adapter.IFC
             if (config == null)
             {
                 config = new IfcPullConfig();
-                BH.Engine.Reflection.Compute.RecordNote("Config has not been specified, default config is used.");
+                BH.Engine.Base.Compute.RecordNote("Config has not been specified, default config is used.");
             }
 
             // Get the settings
@@ -63,7 +63,7 @@ namespace BH.Adapter.IFC
             Discipline? requestDiscipline = request.Discipline(config.Discipline);
             if (requestDiscipline == null)
             {
-                BH.Engine.Reflection.Compute.RecordError("Conflicting disciplines have been detected.");
+                BH.Engine.Base.Compute.RecordError("Conflicting disciplines have been detected.");
                 return new List<IBHoMObject>();
             }
 

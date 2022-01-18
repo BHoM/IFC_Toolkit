@@ -22,7 +22,7 @@
 
 using BH.oM.Adapters.IFC.Properties;
 using BH.oM.Base;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
@@ -46,7 +46,7 @@ namespace BH.Engine.Adapters.IFC
                 return null;
 
             // Warning to be removed once the support for units is added
-            BH.Engine.Reflection.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
+            BH.Engine.Base.Compute.RecordWarning("Please not that IFC_Toolkit currently does not support units in property conversion - please be careful when working with dimensions etc.");
 
             IfcPropertiesToPush pushFragment = bHoMObject.FindFragment<IfcPropertiesToPush>();
             if (pushFragment?.Properties != null)
@@ -76,7 +76,7 @@ namespace BH.Engine.Adapters.IFC
                         IfcProperty prop = typePullFragment.Properties.FirstOrDefault(x => x.Name == propertyName);
                         if (prop != null)
                         {
-                            Engine.Reflection.Compute.RecordWarning("The value for property " + propertyName + " for the object with BHoM_Guid " + bHoMObject.BHoM_Guid + " has been retrieved from its property " + bHoMPropEntry.Key + ".");
+                            Engine.Base.Compute.RecordWarning("The value for property " + propertyName + " for the object with BHoM_Guid " + bHoMObject.BHoM_Guid + " has been retrieved from its property " + bHoMPropEntry.Key + ".");
                             return prop.Value;
                         }
                     }

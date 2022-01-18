@@ -37,7 +37,7 @@ namespace BH.Adapter.IFC
         {
             if (m_LoadedModel == null)
             {
-                Engine.Reflection.Compute.RecordWarning("The .ifc file has not been loaded correctly.");
+                Engine.Base.Compute.RecordWarning("The .ifc file has not been loaded correctly.");
                 return new List<object>();
             }
 
@@ -52,7 +52,7 @@ namespace BH.Adapter.IFC
                 }
                 catch (Exception e)
                 {
-                    BH.Engine.Reflection.Compute.RecordError($"Push to IFC failed with the following error message:\n{e.Message}");
+                    BH.Engine.Base.Compute.RecordError($"Push to IFC failed with the following error message:\n{e.Message}");
                     return new List<object>();
                 }
             }

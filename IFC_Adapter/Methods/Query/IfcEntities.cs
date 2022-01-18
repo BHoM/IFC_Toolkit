@@ -53,13 +53,13 @@ namespace BH.Adapter.IFC
             
             if (!typeof(IBHoMObject).IsAssignableFrom(request.Type))
             {
-                BH.Engine.Reflection.Compute.RecordError($"Input type {request.Type} is not a BHoM type.");
+                BH.Engine.Base.Compute.RecordError($"Input type {request.Type} is not a BHoM type.");
                 return null;
             }
 
             if (request.Type == typeof(IBHoMObject) || request.Type == typeof(BHoMObject) || request.Type == typeof(IMaterialProperties))
             {
-                BH.Engine.Reflection.Compute.RecordError($"It is not allowed to pull elements of type {request.Type} because it is too general, please try to narrow the filter down.");
+                BH.Engine.Base.Compute.RecordError($"It is not allowed to pull elements of type {request.Type} because it is too general, please try to narrow the filter down.");
                 return null;
             }
 
@@ -75,7 +75,7 @@ namespace BH.Adapter.IFC
 
         public static List<IPersistEntity> IfcEntities(this Xbim.Ifc.IfcStore model, IRequest request)
         {
-            BH.Engine.Reflection.Compute.RecordError($"Request of type {request.GetType()} is not supported.");
+            BH.Engine.Base.Compute.RecordError($"Request of type {request.GetType()} is not supported.");
             return null;
         }
 
